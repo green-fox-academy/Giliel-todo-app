@@ -4,7 +4,7 @@ import { Task } from './task';
 import * as fs from 'fs';
 
 export class TaskList {
-  protected _listOfTasks: Task[] = [];
+  private _listOfTasks: Task[] = [];
 
   public addTask(task: string): void {
     let newTask: Task = new Task(task);
@@ -14,6 +14,10 @@ export class TaskList {
     catch (e) {
       console.log('Unable to write file: myTasks.txt');
     }
+  }
+
+  public get listOfTasks(): Task[] {
+    return this._listOfTasks;
   }
 
   public readlistOfTasks(): void {
@@ -33,8 +37,7 @@ export class TaskList {
       }
       this._listOfTasks.push(new Task(fileContent[i], trueFalse));
     }
-    console.log(this._listOfTasks);
-  }
+   }
 
 
   /*     public addTask(task: string): void {

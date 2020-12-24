@@ -9,6 +9,10 @@ export class Task {
     this._taskIsDone = taskIsDone ?? false;
   }
 
+  public get task(): string {
+    return this._task;
+  }
+
   public get taskIsDone(): boolean {
     return this._taskIsDone;
   }
@@ -17,5 +21,5 @@ export class Task {
     task._taskIsDone = true;
   }
 
-  
+
 }

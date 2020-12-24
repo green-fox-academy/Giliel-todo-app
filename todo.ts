@@ -3,21 +3,10 @@
 import { Usage } from './usage';
 import { TaskList } from './taskList';
 
-
 // Arguments //////////////////////
 let commandList: Usage = new Usage();
 
 commandList.addArgument([['-l', 'Lists all the tasks'], ['-a', 'Adds a new task'], ['-r', 'Removes a task'], ['-c', 'Completes a task']]);
-
-let appName = 'Command Line Todo application';
-let pen: string = '';
-
-for (let i: number = 0; i < appName.length; i++) {
-  pen += '=';
-}
-
-console.log(`${appName}\n${pen}\n\nCommand line arguments:`);
-commandList.printListOfArguments();
 
 // End of Arguments //////////////////////
 
@@ -31,25 +20,30 @@ myTasks.addTask('Do homework');
 
 //console.log(myTasks);
 
-myTasks.readlistOfTasks();
 
+if (!process.argv[2]) {
+  let appName = 'Command Line Todo application';
+  let pen: string = '';
 
-
-
-
-
-
-
-
-
-
-/* console.log(process.argv);
-
-if (process.argv[2] === '-l') {
-  console.log('Here comes the discription');
-  } else if (process.argv[2] === '-a') {
-    console.log('adds task');
+  for (let i: number = 0; i < appName.length; i++) {
+    pen += '=';
   }
-  else {
-    console.log('I dont know what to do');
-  } */
+  console.log(`${appName}\n${pen}\n\nCommand line arguments:`);
+  commandList.printListOfArguments();
+
+} else if (process.argv[2] === '-l') {
+
+  myTasks.readlistOfTasks();
+  for (let i: number = 0; i < myTasks.listOfTasks.length; i++) {
+    let checkMark: string = myTasks.listOfTasks[i].taskIsDone ? 'x' : ' ';
+    console.log(`${i + 1} - [${checkMark}] ${myTasks.listOfTasks[i].task}`);
+  }
+} else if (process.argv[2] === '-a') {
+  console.log('adds task');
+} else if (process.argv[2] === '-r') {
+  console.log('remove task');
+} else if (process.argv[2] === '-c') {
+  console.log('complete task');
+} else {
+  console.log('I dont know what to do');
+}
