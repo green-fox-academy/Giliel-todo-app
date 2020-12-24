@@ -6,10 +6,18 @@ import * as fs from 'fs';
 export class TaskList {
   private _listOfTasks: Task[] = [];
 
-  public addTask(task: string): void {
-    let newTask: Task = new Task(task);
+  public writeTask(task: Task): void {
     try {
-      fs.writeFileSync('myTasks.txt', (`${task}\r\n${newTask.taskIsDone}\r\n`), { flag: 'a' });
+      fs.writeFileSync('myTasks.txt', (`${task.task}\r\n${task.taskIsDone}\r\n`), { flag: 'a' });
+    }
+    catch (e) {
+      console.log('Unable to write file: myTasks.txt');
+    }
+  }
+
+  public resetList() {
+    try {
+      fs.writeFileSync('myTasks.txt', (``));
     }
     catch (e) {
       console.log('Unable to write file: myTasks.txt');
@@ -37,7 +45,8 @@ export class TaskList {
       }
       this._listOfTasks.push(new Task(fileContent[i], trueFalse));
     }
-   }
+  }
+}
 
 
   /*     public addTask(task: string): void {
@@ -58,4 +67,3 @@ export class TaskList {
 
 
 
-}
