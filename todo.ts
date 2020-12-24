@@ -42,7 +42,7 @@ if (!process.argv[2]) {
     }
   }
 } else if (process.argv[2] === '-a') {
-  console.log('adds task');
+   myTasks.addTask(process.argv[3]);
 } else if (process.argv[2] === '-r') {
   console.log('remove task');
 } else if (process.argv[2] === '-c') {
