@@ -14,9 +14,9 @@ commandList.addArgument([['-l', 'Lists all the tasks'], ['-a', 'Adds a new task'
 
 let myTasks: TaskList = new TaskList();
 
-myTasks.addTask('Walk the dog');
+/* myTasks.addTask('Walk the dog');
 myTasks.addTask('Buy milk');
-myTasks.addTask('Do homework');
+myTasks.addTask('Do homework'); */
 
 //console.log(myTasks);
 
@@ -32,11 +32,14 @@ if (!process.argv[2]) {
   commandList.printListOfArguments();
 
 } else if (process.argv[2] === '-l') {
-
   myTasks.readlistOfTasks();
-  for (let i: number = 0; i < myTasks.listOfTasks.length; i++) {
-    let checkMark: string = myTasks.listOfTasks[i].taskIsDone ? 'x' : ' ';
-    console.log(`${i + 1} - [${checkMark}] ${myTasks.listOfTasks[i].task}`);
+  if (myTasks.listOfTasks.length === 0) {
+    console.log(`No todos for today! :)`);
+  } else {
+    for (let i: number = 0; i < myTasks.listOfTasks.length; i++) {
+      let checkMark: string = myTasks.listOfTasks[i].taskIsDone ? 'x' : ' ';
+      console.log(`${i + 1} - [${checkMark}] ${myTasks.listOfTasks[i].task}`);
+    }
   }
 } else if (process.argv[2] === '-a') {
   console.log('adds task');
