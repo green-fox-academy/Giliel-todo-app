@@ -50,13 +50,22 @@ if (!process.argv[2]) {
     myTasks.writeTask(newTask);
   }
 } else if (process.argv[2] === '-r') {
-  myTasks.readlistOfTasks();
-  myTasks.listOfTasks.splice(parseInt(process.argv[3]) - 1, 1);
-  myTasks.resetList();
-  myTasks.listOfTasks.forEach(task => {
-    myTasks.writeTask(task);
-  });
-
+  if (!process.argv[3]) {
+    console.log(`Unable to remove: no index provided`);
+  } else if (isNaN(parseInt(process.argv[3]))) {
+    console.log(`Unable to remove: index is not a number`);
+  } else {
+    myTasks.readlistOfTasks();
+    if (parseInt(process.argv[3]) > myTasks.listOfTasks.length) {
+      console.log(`Unable to remove: index is out of bound`);
+    } else {
+      myTasks.listOfTasks.splice(parseInt(process.argv[3]) - 1, 1);
+      myTasks.resetList();
+      myTasks.listOfTasks.forEach(task => {
+        myTasks.writeTask(task);
+      });
+    }
+  }
 } else if (process.argv[2] === '-c') {
   console.log('complete task');
 } else {
