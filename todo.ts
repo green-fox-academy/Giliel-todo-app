@@ -42,7 +42,11 @@ if (!process.argv[2]) {
     }
   }
 } else if (process.argv[2] === '-a') {
-   myTasks.addTask(process.argv[3]);
+  if (!process.argv[3]) {
+    console.log(`Unable to add: no task provided`);
+  } else {
+    myTasks.addTask(process.argv[3]);
+  }
 } else if (process.argv[2] === '-r') {
   console.log('remove task');
 } else if (process.argv[2] === '-c') {
