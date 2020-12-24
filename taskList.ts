@@ -6,40 +6,34 @@ import * as fs from 'fs';
 export class TaskList {
   protected _listOfTasks: Task[] = [];
 
-  protected proba;
-
   public addTask(task: string): void {
     let newTask: Task = new Task(task);
-    this._listOfTasks.push(newTask);
     try {
-      fs.writeFileSync('myTasks.txt', (`${task},false\n`), { flag: 'a' });
+      fs.writeFileSync('myTasks.txt', (`${task}\r\n${newTask.taskIsDone}\r\n`), { flag: 'a' });
     }
     catch (e) {
-      console.log(e);
       console.log('Unable to write file: myTasks.txt');
     }
   }
 
   public readlistOfTasks(): void {
+    let fileContent: string[] = [];
+
     try {
-
-
-      //this._listOfTasks =
-
-      this.proba = (fs.readFileSync('myTasks.txt', 'utf-8').split('\n'));
-
-
-      let object = (this.proba[0].split(','));
-      console.log(object);
-      console.log(this.proba[1]);
-      //console.log(this._listOfTasks);
+      fileContent = (fs.readFileSync('myTasks.txt', 'utf-8').split('\r\n'));
     }
     catch (e) {
       console.log('Unable to read file: myTasks.txt');
-      console.log(e)
-
-
     }
+
+    for (let i = 0; i < fileContent.length - 1; i += 2) {
+      let trueFalse: boolean = false;
+      if (fileContent[i + 1] === 'true') {
+        trueFalse = true;
+      }
+      this._listOfTasks.push(new Task(fileContent[i], trueFalse));
+    }
+    console.log(this._listOfTasks);
   }
 
 

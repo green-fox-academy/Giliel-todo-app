@@ -1,6 +1,6 @@
-Walk the dog,false
-Buy milk,false
-Do homework,false
-Walk the dog,false
-Buy milk,false
-Do homework,false
+Walk the dog
+false
+Buy milk
+false
+Do homework
+false
