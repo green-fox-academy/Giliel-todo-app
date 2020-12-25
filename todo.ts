@@ -5,7 +5,7 @@ import { TaskList } from './taskList';
 import { Task } from './task';
 
 let commandList: Usage = new Usage();
-commandList.addArgument([['-l', 'Lists all the tasks'], ['-a', 'Adds a new task'], ['-r', 'Removes a task'], ['-c', 'Completes a task']]);
+commandList.addArgument([['-l', 'Lists undone the tasks'], ['-la', 'Lists all the tasks'], ['-a', 'Adds a new task'], ['-r', 'Removes a task'], ['-c', 'Completes a task']]);
 
 let myTasks: TaskList = new TaskList();
 
@@ -37,13 +37,22 @@ if (!process.argv[2]) {
   let appName = 'Command Line Todo application';
   let pen: string = '';
 
-  for (let i: number = 0; i < appName.length; i++) {
-    pen += '=';
-  }
-  console.log(`${appName}\n${pen}\n\nCommand line arguments:`);
+  console.log(`${appName}\n${pen.padEnd(appName.length, '=')}\n\nCommand line arguments:`);
   commandList.printListOfArguments();
 
 } else if (process.argv[2] === '-l') {
+  myTasks.readlistOfTasks();
+  let unDone: Task[] = myTasks.listOfTasks.filter(task => !task.taskIsDone)
+  if (unDone.length === 0) {
+    console.log(`No todos for today! :)`);
+  } else {
+    for (let i: number = 0; i < unDone.length; i++) {
+      if (!unDone[i].taskIsDone) {
+        console.log(`${i + 1} - ${unDone[i].task}`);
+      }
+    }
+  }
+} else if (process.argv[2] === '-la') {
   myTasks.readlistOfTasks();
   if (myTasks.listOfTasks.length === 0) {
     console.log(`No todos for today! :)`);
