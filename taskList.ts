@@ -8,12 +8,12 @@ export class TaskList {
   protected _name: string;
 
   constructor(name?: string) {
-    this._name = name ?? 'myTasks';
+    this._name = name ?? 'default';
   }
 
   public writeTask(task: Task): void {
     try {
-      fs.writeFileSync(`${this._name}.txt`, (`${task.task}\r\n${task.taskIsDone}\r\n`), { flag: 'a' });
+      fs.writeFileSync(`./taskLists/${this._name}.txt`, (`${task.task}\r\n${task.taskIsDone}\r\n`), { flag: 'a' });
     }
     catch (e) {
       console.log(`Unable to write file: ${this._name}.txt`);
@@ -22,7 +22,7 @@ export class TaskList {
 
   public resetList() {
     try {
-      fs.writeFileSync(`${this._name}.txt`, (``));
+      fs.writeFileSync(`./taskLists/${this._name}.txt`, (``));
     }
     catch (e) {
       console.log(`Unable to write file: ${this._name}.txt`);
@@ -37,7 +37,7 @@ export class TaskList {
     let fileContent: string[] = [];
 
     try {
-      fileContent = (fs.readFileSync(`${this._name}.txt`, 'utf-8').split('\r\n'));
+      fileContent = (fs.readFileSync(`./taskLists/${this._name}.txt`, 'utf-8').split('\r\n'));
     }
     catch (e) {
       console.log(`Unable to read file: ${this._name}.txt`);
@@ -50,5 +50,18 @@ export class TaskList {
       }
       this._listOfTasks.push(new Task(fileContent[i], trueFalse));
     }
+  }
+
+  public listUsers(): void {
+    let userList: string[] = [];
+    try {
+      userList = fs.readdirSync('./taskLists');
+    }
+    catch (e) {
+      console.log(`unable to read directory`);
+    }
+    userList.forEach(user => {
+      console.log(user.slice(0, user.length - 4));
+    })
   }
 }
