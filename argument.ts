@@ -10,6 +10,6 @@ export class Argument {
   }
 
   public get argumentInfo(): string {
-     return `${this._command.padEnd(5,' ').padStart(9, ' ')}${this._whatItDoes}`;
+     return `${this._command.padEnd(6,' ').padStart(9, ' ')}${this._whatItDoes}`;
   }
 }

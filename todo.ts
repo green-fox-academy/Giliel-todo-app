@@ -5,9 +5,14 @@ import { TaskList } from './taskList';
 import { Task } from './task';
 
 let commandList: Usage = new Usage();
-commandList.addArgument([['-l', 'Lists undone the tasks'], ['-la', 'Lists all the tasks'], ['-a', 'Adds a new task'], ['-r', 'Removes a task'], ['-c', 'Completes a task']]);
+commandList.addArgument([['-l', 'Lists undone the tasks'], ['-la', 'Lists all the tasks'], ['-a', 'Adds a new task'], ['-r', 'Removes a task'], ['-c', 'Completes a task'], ['[-u]', 'Select user for this operation']]);
 
 let myTasks: TaskList = new TaskList();
+
+if (process.argv[process.argv.length - 2] === '-u') {
+  myTasks = new TaskList(process.argv[process.argv.length - 1]);
+process.argv.splice(process.argv.length - 2, 2);
+}
 
 function validateIndex(index: string, taskList: TaskList): boolean {
   if (!index) {

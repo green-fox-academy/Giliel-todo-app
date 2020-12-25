@@ -4,23 +4,28 @@ import { Task } from './task';
 import * as fs from 'fs';
 
 export class TaskList {
-  private _listOfTasks: Task[] = [];
+  protected _listOfTasks: Task[] = [];
+  protected _name: string;
+
+  constructor(name?: string) {
+    this._name = name ?? 'myTasks';
+  }
 
   public writeTask(task: Task): void {
     try {
-      fs.writeFileSync('myTasks.txt', (`${task.task}\r\n${task.taskIsDone}\r\n`), { flag: 'a' });
+      fs.writeFileSync(`${this._name}.txt`, (`${task.task}\r\n${task.taskIsDone}\r\n`), { flag: 'a' });
     }
     catch (e) {
-      console.log('Unable to write file: myTasks.txt');
+      console.log(`Unable to write file: ${this._name}.txt`);
     }
   }
 
   public resetList() {
     try {
-      fs.writeFileSync('myTasks.txt', (``));
+      fs.writeFileSync(`${this._name}.txt`, (``));
     }
     catch (e) {
-      console.log('Unable to write file: myTasks.txt');
+      console.log(`Unable to write file: ${this._name}.txt`);
     }
   }
 
@@ -32,10 +37,10 @@ export class TaskList {
     let fileContent: string[] = [];
 
     try {
-      fileContent = (fs.readFileSync('myTasks.txt', 'utf-8').split('\r\n'));
+      fileContent = (fs.readFileSync(`${this._name}.txt`, 'utf-8').split('\r\n'));
     }
     catch (e) {
-      console.log('Unable to read file: myTasks.txt');
+      console.log(`Unable to read file: ${this._name}.txt`);
     }
 
     for (let i = 0; i < fileContent.length - 1; i += 2) {
@@ -47,23 +52,3 @@ export class TaskList {
     }
   }
 }
-
-
-  /*     public addTask(task: string): void {
-        this._listOfTasks.push(...[new Task(task)]);
-         try {
-          fs.writeFileSync('myTasks.txt', '');
-          this._listOfTasks.forEach((element: Task) => fs.writeFileSync('myTasks.txt', (JSON.stringify(element) + '\n'), {flag: 'a'}));
-        }
-        catch (e) {
-          console.log(e);
-          console.log('Unable to write file: myTasks.txt');
-        }
-      } */
-
-
-
-
-
-
-
