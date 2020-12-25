@@ -4,16 +4,27 @@ import { Usage } from './usage';
 import { TaskList } from './taskList';
 import { Task } from './task';
 
-// Arguments //////////////////////
 let commandList: Usage = new Usage();
-
 commandList.addArgument([['-l', 'Lists all the tasks'], ['-a', 'Adds a new task'], ['-r', 'Removes a task'], ['-c', 'Completes a task']]);
 
-// End of Arguments //////////////////////
-
-// Tasklist //////////////////////////////
-
 let myTasks: TaskList = new TaskList();
+
+function validateIndex(index: string, taskList: TaskList): boolean {
+  if (!index) {
+    console.log(`Unable to remove: no index provided`);
+    return false;
+  }
+  if (isNaN(parseInt(index))) {
+    console.log(`Unable to remove: index is not a number`);
+    return false;
+  }
+  taskList.readlistOfTasks();
+  if (parseInt(index) > taskList.listOfTasks.length) {
+    console.log(`Unable to remove: index is out of bound`);
+    return false;
+  }
+  return true;
+}
 
 /* myTasks.addTask('Walk the dog');
 myTasks.addTask('Buy milk');
@@ -50,30 +61,22 @@ if (!process.argv[2]) {
     myTasks.writeTask(newTask);
   }
 } else if (process.argv[2] === '-r') {
-  if (!process.argv[3]) {
-    console.log(`Unable to remove: no index provided`);
-  } else if (isNaN(parseInt(process.argv[3]))) {
-    console.log(`Unable to remove: index is not a number`);
-  } else {
-    myTasks.readlistOfTasks();
-    if (parseInt(process.argv[3]) > myTasks.listOfTasks.length) {
-      console.log(`Unable to remove: index is out of bound`);
-    } else {
-      myTasks.listOfTasks.splice(parseInt(process.argv[3]) - 1, 1);
-      myTasks.resetList();
-      myTasks.listOfTasks.forEach(task => {
-        myTasks.writeTask(task);
-      });
-    }
+
+  if (validateIndex(process.argv[3], myTasks)) {
+    myTasks.listOfTasks.splice(parseInt(process.argv[3]) - 1, 1);
+    myTasks.resetList();
+    myTasks.listOfTasks.forEach(task => {
+      myTasks.writeTask(task);
+    });
   }
 } else if (process.argv[2] === '-c') {
-  myTasks.readlistOfTasks();
-myTasks.listOfTasks[parseInt(process.argv[3]) - 1].checkTask();
-myTasks.resetList();
-myTasks.listOfTasks.forEach(task => {
-  myTasks.writeTask(task);
-});
-
+  if (validateIndex(process.argv[3], myTasks)) {
+    myTasks.listOfTasks[parseInt(process.argv[3]) - 1].checkTask();
+    myTasks.resetList();
+    myTasks.listOfTasks.forEach(task => {
+      myTasks.writeTask(task);
+    });
+  }
 } else {
   console.log(`Unsupported argument`);
 }
