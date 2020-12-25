@@ -78,13 +78,15 @@ if (!process.argv[2]) {
     myTasks.writeTask(task);
   });
 } else if (process.argv[2] === '-c') {
-  if (validateIndex(process.argv[3], myTasks)) {
-    myTasks.listOfTasks[parseInt(process.argv[3]) - 1].checkTask();
-    myTasks.resetList();
-    myTasks.listOfTasks.forEach(task => {
-      myTasks.writeTask(task);
-    });
+  for (let i: number = 3; i < process.argv.length; i++) {
+    if (validateIndex(process.argv[i], myTasks)) {
+      myTasks.listOfTasks[parseInt(process.argv[i]) - 1].checkTask();
+    }
   }
+  myTasks.resetList();
+  myTasks.listOfTasks.forEach(task => {
+    myTasks.writeTask(task);
+  });
 } else {
   console.log(`Unsupported argument`);
 }

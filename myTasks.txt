@@ -1,6 +1,6 @@
 eat lunch
 false
 eat the dessert
-false
+true
 feed the bunnies
-false
+true
