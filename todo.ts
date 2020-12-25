@@ -67,7 +67,13 @@ if (!process.argv[2]) {
     }
   }
 } else if (process.argv[2] === '-c') {
-  console.log('complete task');
+  myTasks.readlistOfTasks();
+myTasks.listOfTasks[parseInt(process.argv[3]) - 1].checkTask();
+myTasks.resetList();
+myTasks.listOfTasks.forEach(task => {
+  myTasks.writeTask(task);
+});
+
 } else {
   console.log(`Unsupported argument`);
 }

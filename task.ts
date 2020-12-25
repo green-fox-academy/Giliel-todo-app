@@ -17,8 +17,8 @@ export class Task {
     return this._taskIsDone;
   }
 
-  public checkTask(task: Task): void {
-    task._taskIsDone = true;
+  public checkTask(): void {
+    this._taskIsDone = true;
   }
 
 
