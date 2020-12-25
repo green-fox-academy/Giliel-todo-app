@@ -5,7 +5,7 @@ import { TaskList } from './taskList';
 import { Task } from './task';
 
 let commandList: Usage = new Usage();
-commandList.addArgument([['-l', 'Lists undone the tasks'], ['-la', 'Lists all the tasks'], ['-a', 'Adds a new task'], ['-r', 'Removes a task'], ['-c', 'Completes a task'], ['-lu', 'List users'], ['[-u]', 'Select user for this operation']]);
+commandList.addArgument([['-l', 'Lists undone the tasks'], ['-la', 'Lists all the tasks'], ['-a', 'Adds a new task'], ['-r', 'Removes a task'], ['-c', 'Completes a task'], ['-lu', 'List users'], ['-ru', 'Remove user'], ['[-u]', 'Select user for this operation']]);
 
 let myTasks: TaskList = new TaskList();
 
@@ -94,6 +94,8 @@ if (!process.argv[2]) {
   });
 } else if (process.argv[2] === '-lu') {
   myTasks.listUsers();
+} else if (process.argv[2] === '-ru') {
+  myTasks.removeUser(process.argv[3]);
 } else {
   console.log(`Unsupported argument`);
 }

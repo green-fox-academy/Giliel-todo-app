@@ -58,10 +58,19 @@ export class TaskList {
       userList = fs.readdirSync('./taskLists');
     }
     catch (e) {
-      console.log(`unable to read directory`);
+      console.log(`Unable to read directory`);
     }
     userList.forEach(user => {
       console.log(user.slice(0, user.length - 4));
-    })
+    });
+  }
+
+  public removeUser(user: string): void {
+    try {
+      fs.rmSync(`./taskLists/${user}.txt`);
+    }
+    catch(e) {
+      console.log(`Unable to remove user`);
+    }
   }
 }
