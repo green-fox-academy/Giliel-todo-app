@@ -69,5 +69,5 @@ if (!process.argv[2]) {
 } else if (process.argv[2] === '-c') {
   console.log('complete task');
 } else {
-  console.log('I dont know what to do');
+  console.log(`Unsupported argument`);
 }
