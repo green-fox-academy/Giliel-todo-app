@@ -13,6 +13,10 @@ export class Task {
     return this._task;
   }
 
+  public set task(value: string) {
+    this._task = value;
+  }
+
   public get taskIsDone(): boolean {
     return this._taskIsDone;
   }

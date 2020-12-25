@@ -1,4 +1,6 @@
-Feed the bunnies
-true
-Feed the horse
-true
+eat lunch
+false
+eat the dessert
+false
+feed the bunnies
+false

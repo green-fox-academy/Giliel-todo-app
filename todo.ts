@@ -15,23 +15,18 @@ function validateIndex(index: string, taskList: TaskList): boolean {
     return false;
   }
   if (isNaN(parseInt(index))) {
-    console.log(`Unable to remove: index is not a number`);
+    console.log(`Unable to remove: ${index} is not a number`);
     return false;
   }
-  taskList.readlistOfTasks();
+  if (taskList.listOfTasks.length === 0) {
+    taskList.readlistOfTasks();
+  }
   if (parseInt(index) > taskList.listOfTasks.length) {
-    console.log(`Unable to remove: index is out of bound`);
+    console.log(`Unable to remove: index ${index} is out of bound`);
     return false;
   }
   return true;
 }
-
-/* myTasks.addTask('Walk the dog');
-myTasks.addTask('Buy milk');
-myTasks.addTask('Do homework'); */
-
-//console.log(myTasks);
-
 
 if (!process.argv[2]) {
   let appName = 'Command Line Todo application';
@@ -66,18 +61,22 @@ if (!process.argv[2]) {
   if (!process.argv[3]) {
     console.log(`Unable to add: no task provided`);
   } else {
-    let newTask: Task = new Task(process.argv[3]);
-    myTasks.writeTask(newTask);
+    for (let i: number = 3; i < process.argv.length; i++) {
+      let newTask: Task = new Task(process.argv[i]);
+      myTasks.writeTask(newTask);
+    }
   }
 } else if (process.argv[2] === '-r') {
-
-  if (validateIndex(process.argv[3], myTasks)) {
-    myTasks.listOfTasks.splice(parseInt(process.argv[3]) - 1, 1);
-    myTasks.resetList();
-    myTasks.listOfTasks.forEach(task => {
-      myTasks.writeTask(task);
-    });
+  for (let i: number = 3; i < process.argv.length; i++) {
+    if (validateIndex(process.argv[i], myTasks)) {
+      myTasks.listOfTasks[parseInt(process.argv[i]) - 1].task = '';
+    }
   }
+  let remainingTask: Task[] = myTasks.listOfTasks.filter(task => task.task !== '');
+  myTasks.resetList();
+  remainingTask.forEach(task => {
+    myTasks.writeTask(task);
+  });
 } else if (process.argv[2] === '-c') {
   if (validateIndex(process.argv[3], myTasks)) {
     myTasks.listOfTasks[parseInt(process.argv[3]) - 1].checkTask();
