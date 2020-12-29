@@ -24,6 +24,4 @@ export class Task {
   public checkTask(): void {
     this._taskIsDone = true;
   }
-
-
 }

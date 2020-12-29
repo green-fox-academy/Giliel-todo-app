@@ -20,7 +20,7 @@ export class TaskList {
     }
   }
 
-  public resetList() {
+  public resetList(): void {
     try {
       fs.writeFileSync(`./taskLists/${this._name}.txt`, (``));
     }
@@ -69,7 +69,7 @@ export class TaskList {
     try {
       fs.rmSync(`./taskLists/${user}.txt`);
     }
-    catch(e) {
+    catch (e) {
       console.log(`Unable to remove user`);
     }
   }
